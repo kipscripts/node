@@ -75,8 +75,8 @@ app.get('/loadout/colorado.svg', function(req, res) {
     res.sendFile(path.join(__dirname + '/colorado.svg'));
 });
 
-app.get('/loadout/tooltip.svg', function(req, res) {
-    res.sendFile(path.join(__dirname + '/tooltip.svg'));
+app.get('/loadout/colorado-im.html', function(req, res) {
+    res.sendFile(path.join(__dirname + '/colorado-im.html'));
 });
 
 /* stupid simple GET to show the SVG page. By using this function
