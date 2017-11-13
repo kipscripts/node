@@ -1,0 +1,39 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Check Water Levels</title>
+    <meta name="description" content="Scrape River Levels from State site">
+    <meta name="author" content="Kip Turk">
+    <meta http-equiv="Cache-control" content="no-cache">
+    
+    <link rel="stylesheet" href="css/lnf.css">
+
+    <!--[if lt IE 9]>
+        <script src="https://cdnjscloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+
+<script type="text/javascript">
+  window.onload = function getcty()
+  {
+    var parameters = location.search.substring(1);
+    var temp = parameters.split("=");
+    var county = unescape(temp[1]);
+    document.getElementById("data").src = "http://35.163.166.177:8000/stream_data?county=" + county
+  }
+</script>
+
+</head>
+
+<body>
+<h1 style="color:navy;margin-left:3%;">Check Water Levels on Several Rivers</h1>
+
+
+<iframe id="data" src="#" name="Current_Data" frameborder="0" width="800" height="1024" style="float: left;">
+
+</iframe>
+
+</body>
+</html>

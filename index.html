@@ -1,0 +1,90 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Camping Loadout Builder</title>
+    <meta name="description" content="Gear and Meal Options based on Camping style and Temperature expectations">
+    <meta name="author" content="Kip Turk">
+
+    <link rel="stylesheet" href="css/lnf.css">
+
+    <!--[if lt IE 9]>
+        <script src="https://cdnjscloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<h1 style="color:navy;margin-left:3%;">Camping Loadout Builder</h1>
+
+<form action="/loadout/select.php" method="POST">
+<fieldset>
+    <legend>Trip Type:</legend>
+    <input type="radio" name="cstyle" value="b"> <div class="tooltip">Backpacking<span class="tiptext">Significant restrictions on weight or gear, no coolers available.</span></div><br />
+    <input type="radio" name="cstyle" value="c"> <div class="tooltip">Car Camping<span class="tiptext">No restrictions on weight or gear, coolers are available.</span></div><br />
+    <input type="radio" name="cstyle" value="d"> <div class="tooltip">Daypacking <span class="tiptext">Extreme restrictions on weight or gear, no coolers available, no fire available.</span></div><br /><br />
+    <input type="checkbox" name="fishing" value="1" /> <div class="tooltip">Fishing <span class="tiptext">Adds fishing gear with waders dependent on temperature.</span></div><br /><br />
+    <input type="radio" name="temperature" value="cold"> <div class="tooltip">Cold<span class="tiptext">Low temps below 40*</span></div>
+    <input type="radio" name="temperature" value="cool"> <div class="tooltip">Cool<span class="tiptext">Low temps 50-40*</span></div>
+    <input type="radio" name="temperature" value="warm"> <div class="tooltip">Warm<span class="tiptext">Low temps 60-50*</span></div>
+    <input type="radio" name="temperature" value="hot"> <div class="tooltip">Hot<span class="tiptext">Low temps above 60*</span></div>
+</fieldset>
+<fieldset>
+    <legend>Meal Preferences:</legend>
+    <div class="meal"><div>Breakfasts: </div><div><select name="bfast">
+    <option value="1"> 1</option>
+    <option value="2"> 2</option>
+    <option value="3"> 3</option>
+    <option value="4"> 4</option>
+    <option value="5"> 5</option>
+    <option value="6"> 6</option>
+    <option value="7"> 7</option>
+    <option value="8"> 8</option>
+    <option value="9"> 9</option>
+    <option value="10">10</option>
+    </select></div></div>
+    <div class="meal"><div>Lunches: </div><div><select name="lunch">
+    <option value="1"> 1</option>
+    <option value="2"> 2</option>
+    <option value="3"> 3</option>
+    <option value="4"> 4</option>
+    <option value="5"> 5</option>
+    <option value="6"> 6</option>
+    <option value="7"> 7</option>
+    <option value="8"> 8</option>
+    <option value="9"> 9</option>
+    <option value="10">10</option>
+    </select></div></div>
+    <div class="meal"><div>Dinners: </div><div><select name="dinner">
+    <option value="1"> 1</option>
+    <option value="2"> 2</option>
+    <option value="3"> 3</option>
+    <option value="4"> 4</option>
+    <option value="5"> 5</option>
+    <option value="6"> 6</option>
+    <option value="7"> 7</option>
+    <option value="8"> 8</option>
+    <option value="9"> 9</option>
+    <option value="10">10</option>
+    </select></div></div>   
+    <br /><br />
+    <div>
+    <div class='centered'><input type="checkbox" name="ingredient[]" value="beef" /> Beef</div>
+    <div class='centered'><input type="checkbox" name="ingredient[]" value="chicken" /> Chicken </div>
+    </div>
+    <div>
+    <div class='centered'><input type="checkbox" name="ingredient[]" value="pork" /> Pork</div>
+    <div class='centered'><input type="checkbox" name="ingredient[]" value="veggie" /> Vegetable </div>
+    </div>
+    <div>
+    <div class='centered'><input type="checkbox" name="ingredient[]" value="fish" /> Fish</div>
+    <div class='centered'><input type="checkbox" name="ingredient[]" value="seafood" /> Seafood </div>
+    </div>    
+</fieldset>
+
+
+<input type="submit" value="Submit"><input type="reset" value="Reset">
+</form>
+</body>
+</html>

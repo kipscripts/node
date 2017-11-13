@@ -1,0 +1,75 @@
+
+body {
+    display: block;
+    margin: 1%;
+}
+
+body:focus {
+    outline: none;
+}
+
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+/* Tooltip text */
+.tooltip .tiptext {
+    visibility: hidden;
+    width: 180px;
+    background-color: #ecf280;
+    color: black;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show tooltip on hover */
+.tooltip:hover .tiptext {
+    visibility: visible;
+}
+
+.tooltip .foodtext {
+    visibility: hidden;
+    width: 380px;
+    background-color: #607faf;
+    color: black;
+    text-align: left;
+    padding: 20px 20px 20px 20px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show tooltip on hover */
+.tooltip:hover .foodtext {
+    visibility: visible;
+}
+
+/* Center text with checkboxes */
+.centered {
+    display: inline-block;
+    margin: auto;
+    width: 90px;
+}
+
+/* Align meal count text */
+.meal {
+    display: inline-block;
+    margin: auto;
+    width: 92px;
+    border: 0px solid black;
+}
+
+.h4 {
+    text-decoration: underline;
+    display: inline-block;
+    width: 40%;
+    text-align: center;
+}
+

@@ -1,0 +1,71 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Colorado Fishing</title>
+    <meta name="description" content="Colorado map">
+    <meta name="author" content="Kip Turk">
+    <meta http-equiv="Cache-control" content="no-cache">
+    
+    <link rel="stylesheet" href="css/lnf.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+        <script src="https://cdnjscloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+    <style>
+        .counties #Weld_County:hover {
+            fill: '#343491';
+            stroke: 'gold';
+        }
+    </style>
+</head>
+
+<body>
+<form id="map" action="streams.html">
+<h1 style="color:navy;margin-left:3%;">Click the county to find current stream data</h1>
+<p></p>
+<script src="node_modules/snapsvg/dist/snap.svg-min.js"></script>
+
+<!-- <svg width="1024" height="741" preserveAspectRatio="none" id="counties">
+<image xlink:href="colorado.svg" x="0" y="0" height="90%" width="90%">
+</svg> -->
+
+<object data="colorado.svg" type="image/svg+xml" id="counties" width="80%" height="80%">
+</object>
+
+<input type="hidden" name="county" id="county">
+
+<script>
+(function($)    {
+    var foo = document.getElementById("counties");
+    foo.addEventListener("load", function() {
+        var svgDoc = foo.contentDocument;
+        svgDoc.addEventListener("mouseover", function(svgDoc)  {       
+            var poly = svgDoc.target.id;
+            var mystring = "\"[id='" + poly + "']\"";
+            console.log(poly);
+            console.log(mystring);
+            (mystring).style.fill = '#343491';
+            (mystring).style.stroke = 'gold';
+        });
+        svgDoc.addEventListener("mouseout", function(svgDoc)  {        
+            var poly = svgDoc.target.id;
+            var mystring = "\"[id='" + poly + "']\"";
+            (mystring).style.fill = '#aedd87';
+            (mystring).style.stroke = 'black';
+        });
+        svgDoc.addEventListener("click", function(svgDoc) {
+            console.log("The id is " + svgDoc.target.id);
+            document.getElementById("county").value = svgDoc.target.id;
+            document.getElementById("map").submit();
+            return false;
+        });        
+    });
+})();
+</script>
+
+</form>
+</body>
+</html>
