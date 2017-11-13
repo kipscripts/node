@@ -1,0 +1,107 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Colorado Fishing</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <meta name="description" content="Colorado map">
+    <meta name="author" content="Kip Turk">
+    <meta http-equiv="Cache-control" content="max-age=300">
+    <meta charset="UTF-8">
+   
+<!-- jquery wasn't needed in this page, but leaving the link in case I want it later -->    
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->    
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!--[if lt IE 9]>
+        <script src="https://cdnjscloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+
+</head>
+
+<body style="width: 100%; height: 100%;">
+
+<h1 style="color:navy;margin-left:3%;">Click the county to find current stream data</h1>
+<p></p>
+<div class="stations" name="stations" id="stations">
+    
+</div>
+    <style>
+        /* CSS for the output table */
+        div#stations.stations { opacity: 0; position: relative; display: inline-block;border-bottom: 1px dotted black; }
+        table { width: 90%; table-layout: fixed; border-collapse: collapse; text-align: center; }
+        th { background-color: #fcc072; border: solid; }
+        tr:nth-child(even) { background-color: #92b8f4; }
+        td { border: solid; }
+        .station { width: 50%; max-width: 45%; white-space: nowrap; text-overflow: ellipsis;overflow: hidden; }
+        .recent { width: 20%; max-width: 25%; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+        .height { width: 8%; }
+        .latitude { width: 10%; }
+        .longitude { width: 12%; }        
+    </style>
+
+
+<div width="80%" height="80%">
+<!-- Main SVG taken from https://commons.wikimedia.org/wiki/File:Map_of_Colorado_counties,_blank.svg with an open copyright
+Minor modifications made like removing spaces from id names and tweaking various
+z-index and fill properties.  No changes were made to the map. -->
+<object id="svg" type="image/svg+xml" data="../colorado.svg" pointer-events="fill" width="80%" height="80%"></object>
+</div>
+
+<form id="map" action="streams.html" pointer-events="none">
+<input type="hidden" name="county" id="county">
+
+<script>
+
+svg.onload = function() {
+    console.log("SVG should be loaded");
+    var svgDoc = document.getElementById("svg").contentDocument.getElementById("counties");
+    var svg = d3.select(svgDoc);
+    // Checking mouseover on the map to toggle tooltip text and polygon fill change
+    // Not a huge fan of manually setting rectw and coords offsets to deal with huge
+    // font requirements based on main svg viewBox size
+    svg.on("mouseover", function()  {
+            var coords = [0, 0];
+            coords = d3.mouse(this);
+            var tooltip = d3.select(svgDoc).select("g.tooltip");
+            var backing = d3.select(svgDoc).select("rect#backing.backing")
+            var tiptext = d3.select(svgDoc).select("tspan#tiptext.tiptext");
+            //console.log("svg coords: " + coords);
+            //console.log("element: " + document.elementFromPoint(d3.event.clientX, d3.event.clientY));
+            var string = d3.event.target.id;
+            string = string.slice(0, -7);
+            var rectw = (string.length) * 12000;
+            //console.log(string);
+            backing.attr("width", rectw);
+            tooltip.attr("transform", "translate(" + (coords[0]-10000) + "," + (coords[1]-10000) + ")");
+            tooltip.style("opacity", "1");
+            tiptext.html(string);
+    });
+    // And checking for a mouseclick on the map.  Take the polygon id and set it to 
+    // the value for the hidden county field then submit the form
+    svg.on("click", function()   {
+        var th = "<table><tr><th>Station</th><th>Recent</th><th>Height</th><th>Lat</th><th>Long</th></tr>";
+        var tf = "</table>";
+        var poly = {};
+        poly["county"] = d3.event.target.id;
+        var stations = d3.select("div#stations.stations");
+        d3.request("/loadout/scrapes")
+        .header("Content-Type", "application/json")
+        .on("error", function(error) { var error = callback(error); console.log("It broke."); })
+        .on("load", function(xhr) { var um = callback(null, hello); console.log("In here."); })
+        .post(JSON.stringify(poly), function(callback)  {
+            //var results = JSON.parse(callback.responseText);
+            console.log("XHR: " + JSON.stringify(poly));
+            console.log("Results: " + callback.responseText);
+            //table format from streams.js injects here
+            stations.style("opacity", "1");
+            stations.html(callback.responseText);
+        });
+    });
+};
+</script>
+
+</form>
+</body>
+</html>
