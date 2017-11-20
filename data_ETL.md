@@ -6,7 +6,7 @@ To clean up DWR_Surface_Water_Stations.csv, I just passed the file through awk f
 awk -F ',' ' { if ($3 ~ / /) { split($3, parts, " "); county=parts[1]"_"parts[2]; } else  
 { county=$3 } if ($5 ~ /"/) { split($0, a, "\""); station=a[2]; split(a[3], b, ",");  
 abbrev=b[2]; usgsid=b[3]; } else { station=$5; abbrev=$6; usgsid=$7; } lat=substr($(NF-1), 3);  
-long=substr($NF, 1, length($NF)-2); if (abbrev=="") { next; } else {  printf "%d|%d|%s|%s|%s|%s|%d|%f|%f\n",  
+long=substr($NF, 1, length($NF)-2); if (abbrev=="") { next; } else { printf "%d|%d|%s|%s|%s|%s|%d|%f|%f\n",  
 $1, $2, county, $4, station, abbrev, usgsid, lat, long } } ' DWR_Surface_Water_Stations.csv > useful.txt
 ```
 
@@ -23,7 +23,7 @@ $1, $2, county, $4, station, abbrev, usgsid, lat, long } } ' DWR_Surface_Water_S
 **long=substr($NF, 1, length($NF)-2);** - Finally, the longitude is the final field $NF. Since the string ends with a paren and double quote, we substring from the first character up til 2 short of the string length.
 
 **if (abbrev=="") { next; }** - If the abbreviation field is empty, skip this line.  
-**else {  printf "%d|%d|%s|%s|%s|%s|%d|%f|%f\n", ... }** - Otherwise print the fields delimited by | using digit (%d), string (%s) and float (%f) placeholders as a sanity check to ensure we had the proper data.  
+**else { printf "%d|%d|%s|%s|%s|%s|%d|%f|%f\n", ... }** - Otherwise print the fields delimited by | using digit (%d), string (%s) and float (%f) placeholders as a sanity check to ensure we had the proper data.  
 **DWR_Surface_Water_Stations.csv > useful.txt** - Read the .csv file and direct the print output to useful.txt
 
 At that point, simply copy the useful.txt file to the DB server and use  
